@@ -65,9 +65,13 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Default-ask-Image" translatesAutoresizingMaskIntoConstraints="NO" id="0rH-B0-nk6">
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Default-ask-Image" translatesAutoresizingMaskIntoConstraints="NO" id="0rH-B0-nk6">
                                                 <rect key="frame" x="8" y="232" width="359" height="354"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <gestureRecognizers/>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="jwN-mM-2Ff" appends="YES" id="Qnq-p9-fFq"/>
+                                                </connections>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Task Image:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9D-hA-uvl">
                                                 <rect key="frame" x="8" y="203" width="91" height="21"/>
@@ -124,11 +128,32 @@
                     <connections>
                         <outlet property="dueDateField" destination="leb-Dl-d8Q" id="aDL-7r-YbW"/>
                         <outlet property="priorityField" destination="aE1-Hy-e1c" id="H6C-9v-Xaa"/>
+                        <outlet property="taskPhoto" destination="0rH-B0-nk6" id="qNN-yI-SlK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="jwN-mM-2Ff">
+                    <connections>
+                        <action selector="choosePhoto:" destination="BYZ-38-t0r" id="wOv-19-m8G"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="773.60000000000002" y="123.68815592203899"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="VL2-Em-Lxn">
+            <objects>
+                <viewController id="XOk-Ei-ZZw" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vmt-SC-TYB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="jVh-ez-rS8"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J6o-9f-L80" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1596" y="116"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KQF-gQ-YvR">
