@@ -95,6 +95,14 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTv-TZ-aR4">
+                                                <rect key="frame" x="298" y="203" width="62" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Recenter"/>
+                                                <connections>
+                                                    <segue destination="XOk-Ei-ZZw" kind="show" identifier="recentreImage" id="wni-2u-WMT"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -140,20 +148,58 @@
             </objects>
             <point key="canvasLocation" x="773.60000000000002" y="123.68815592203899"/>
         </scene>
-        <!--View Controller-->
+        <!--Recentre Controller-->
         <scene sceneID="VL2-Em-Lxn">
             <objects>
-                <viewController id="XOk-Ei-ZZw" sceneMemberID="viewController">
+                <viewController id="XOk-Ei-ZZw" customClass="RecentreController" customModule="TdoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vmt-SC-TYB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="125" translatesAutoresizingMaskIntoConstraints="NO" id="Agg-2h-7oh">
+                                <rect key="frame" x="16" y="96" width="343" height="516"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdj-q3-YYj">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="343"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="xdj-q3-YYj" secondAttribute="height" multiplier="1:1" id="E0A-CC-RE0"/>
+                                        </constraints>
+                                    </scrollView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsz-Vu-L88">
+                                        <rect key="frame" x="0.0" y="468" width="343" height="48"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" red="0.94380804019999998" green="0.94380804019999998" blue="0.94380804019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="xdj-q3-YYj" secondAttribute="trailing" id="BDg-YC-m1I"/>
+                                    <constraint firstAttribute="trailing" secondItem="Hsz-Vu-L88" secondAttribute="trailing" id="BKY-2S-3t6"/>
+                                    <constraint firstAttribute="bottom" secondItem="Hsz-Vu-L88" secondAttribute="bottom" id="TyM-En-eaT"/>
+                                    <constraint firstItem="xdj-q3-YYj" firstAttribute="leading" secondItem="Agg-2h-7oh" secondAttribute="leading" id="gUC-km-q91"/>
+                                    <constraint firstItem="Hsz-Vu-L88" firstAttribute="leading" secondItem="Agg-2h-7oh" secondAttribute="leading" id="icJ-Xh-edr"/>
+                                    <constraint firstItem="xdj-q3-YYj" firstAttribute="top" secondItem="Agg-2h-7oh" secondAttribute="top" id="mXp-vw-GAK"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Agg-2h-7oh" firstAttribute="top" secondItem="jVh-ez-rS8" secondAttribute="top" constant="32" id="JDv-DN-8B0"/>
+                            <constraint firstItem="Agg-2h-7oh" firstAttribute="leading" secondItem="jVh-ez-rS8" secondAttribute="leading" constant="16" id="mRv-4J-zYy"/>
+                            <constraint firstItem="jVh-ez-rS8" firstAttribute="trailing" secondItem="Agg-2h-7oh" secondAttribute="trailing" constant="16" id="nxp-JR-WdL"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="jVh-ez-rS8"/>
                     </view>
+                    <connections>
+                        <outlet property="imageScrollView" destination="xdj-q3-YYj" id="a2t-wg-xxL"/>
+                        <outlet property="saveImagePositionButton" destination="Hsz-Vu-L88" id="vJO-Zz-z3L"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J6o-9f-L80" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1596" y="116"/>
+            <point key="canvasLocation" x="1652" y="123.68815592203899"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KQF-gQ-YvR">

@@ -25,6 +25,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        let dest = segue.identifier ?? ""
+        if dest == "recentreImage" {
+        let abc = segue.destination as? RecentreController
+            abc?.imageToRecentre = taskPhoto.image
+        }
+        
+    }
+    
     // code for image selection
     @IBAction func choosePhoto(_ sender: UITapGestureRecognizer) {
         
