@@ -11,6 +11,7 @@ import UIKit
 class RecentreController: UIViewController, UIScrollViewDelegate {
     /// variable to hold image
     public var imageToRecentre: UIImage!
+    public var screenshot: UIImage!
     var imageView = UIImageView()
     
     @IBOutlet weak var imageScrollView: UIScrollView!
@@ -18,6 +19,7 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "Recntre Image"
         self.imageScrollView.delegate = self
         self.loadImageToScroll()
         
@@ -70,6 +72,17 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         }
         
         self.imageView.frame = contentsFrame
+    }
+    
+    @IBAction func avf(_ sender: Any) {
+        saveAndCropImage()
+    }
+    func saveAndCropImage() {
+        UIGraphicsBeginImageContextWithOptions(self.imageScrollView.bounds.size, true, UIScreen.main.scale)
+        self.imageScrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        self.screenshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        self.imageView.image = screenshot
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {

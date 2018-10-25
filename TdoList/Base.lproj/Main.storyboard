@@ -100,7 +100,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Recenter"/>
                                                 <connections>
-                                                    <segue destination="XOk-Ei-ZZw" kind="show" identifier="recentreImage" id="wni-2u-WMT"/>
+                                                    <segue destination="XOk-Ei-ZZw" kind="show" identifier="recentreImage" id="OV4-n0-PQ0"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -146,9 +146,9 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="773.60000000000002" y="123.68815592203899"/>
+            <point key="canvasLocation" x="1066" y="100"/>
         </scene>
-        <!--Recentre Controller-->
+        <!--Recentre-->
         <scene sceneID="VL2-Em-Lxn">
             <objects>
                 <viewController id="XOk-Ei-ZZw" customClass="RecentreController" customModule="TdoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -172,6 +172,9 @@
                                         <state key="normal" title="Save">
                                             <color key="titleColor" red="0.94380804019999998" green="0.94380804019999998" blue="0.94380804019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="avf:" destination="XOk-Ei-ZZw" eventType="touchUpInside" id="Ukl-GG-whX"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -192,6 +195,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jVh-ez-rS8"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Recentre" id="syP-NY-UVQ"/>
                     <connections>
                         <outlet property="imageScrollView" destination="xdj-q3-YYj" id="a2t-wg-xxL"/>
                         <outlet property="saveImagePositionButton" destination="Hsz-Vu-L88" id="vJO-Zz-z3L"/>
@@ -199,7 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J6o-9f-L80" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1652" y="123.68815592203899"/>
+            <point key="canvasLocation" x="1985" y="99"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KQF-gQ-YvR">
@@ -217,7 +221,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7pc-kk-q1K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-201" y="124"/>
+            <point key="canvasLocation" x="156" y="99"/>
         </scene>
     </scenes>
     <resources>
