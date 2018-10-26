@@ -14,6 +14,7 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     public var screenshot: UIImage!
     var imageView = UIImageView()
     
+    @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var saveImagePositionButton: UIButton!
     
@@ -77,12 +78,18 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     @IBAction func avf(_ sender: Any) {
         saveAndCropImage()
     }
+  
     func saveAndCropImage() {
         UIGraphicsBeginImageContextWithOptions(self.imageScrollView.bounds.size, true, UIScreen.main.scale)
-        self.imageScrollView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let offset = self.imageScrollView.contentOffset
+        guard let context = UIGraphicsGetCurrentContext() else {
+            fatalError("ss")
+        }
+        context.translateBy(x: -offset.x, y: -offset.y)
+        self.imageScrollView.layer.render(in: context)
         self.screenshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.imageView.image = screenshot
+        self.previewImage.image = screenshot
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {

@@ -156,54 +156,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="125" translatesAutoresizingMaskIntoConstraints="NO" id="Agg-2h-7oh">
-                                <rect key="frame" x="16" y="96" width="343" height="516"/>
-                                <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdj-q3-YYj">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="343"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="xdj-q3-YYj" secondAttribute="height" multiplier="1:1" id="E0A-CC-RE0"/>
-                                        </constraints>
-                                    </scrollView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsz-Vu-L88">
-                                        <rect key="frame" x="0.0" y="468" width="343" height="48"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="Save">
-                                            <color key="titleColor" red="0.94380804019999998" green="0.94380804019999998" blue="0.94380804019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="avf:" destination="XOk-Ei-ZZw" eventType="touchUpInside" id="Ukl-GG-whX"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdj-q3-YYj">
+                                <rect key="frame" x="16" y="76" width="343" height="343"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="xdj-q3-YYj" secondAttribute="trailing" id="BDg-YC-m1I"/>
-                                    <constraint firstAttribute="trailing" secondItem="Hsz-Vu-L88" secondAttribute="trailing" id="BKY-2S-3t6"/>
-                                    <constraint firstAttribute="bottom" secondItem="Hsz-Vu-L88" secondAttribute="bottom" id="TyM-En-eaT"/>
-                                    <constraint firstItem="xdj-q3-YYj" firstAttribute="leading" secondItem="Agg-2h-7oh" secondAttribute="leading" id="gUC-km-q91"/>
-                                    <constraint firstItem="Hsz-Vu-L88" firstAttribute="leading" secondItem="Agg-2h-7oh" secondAttribute="leading" id="icJ-Xh-edr"/>
-                                    <constraint firstItem="xdj-q3-YYj" firstAttribute="top" secondItem="Agg-2h-7oh" secondAttribute="top" id="mXp-vw-GAK"/>
+                                    <constraint firstAttribute="width" constant="343" id="PNL-yH-gKG"/>
+                                    <constraint firstAttribute="height" constant="343" id="bNn-Bj-Irz"/>
                                 </constraints>
-                            </stackView>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsz-Vu-L88">
+                                <rect key="frame" x="16" y="613" width="343" height="48"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleColor" red="0.94380804019999998" green="0.94380804019999998" blue="0.94380804019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="avf:" destination="XOk-Ei-ZZw" eventType="touchUpInside" id="Ukl-GG-whX"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U6c-KT-Frr">
+                                <rect key="frame" x="118" y="441" width="138" height="138"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="138" id="nJf-Nd-R6H"/>
+                                    <constraint firstAttribute="width" constant="138" id="xkQ-7E-hn0"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Agg-2h-7oh" firstAttribute="top" secondItem="jVh-ez-rS8" secondAttribute="top" constant="32" id="JDv-DN-8B0"/>
-                            <constraint firstItem="Agg-2h-7oh" firstAttribute="leading" secondItem="jVh-ez-rS8" secondAttribute="leading" constant="16" id="mRv-4J-zYy"/>
-                            <constraint firstItem="jVh-ez-rS8" firstAttribute="trailing" secondItem="Agg-2h-7oh" secondAttribute="trailing" constant="16" id="nxp-JR-WdL"/>
+                            <constraint firstItem="xdj-q3-YYj" firstAttribute="top" secondItem="jVh-ez-rS8" secondAttribute="top" constant="12" id="5lU-CA-Tfe"/>
+                            <constraint firstItem="jVh-ez-rS8" firstAttribute="trailing" secondItem="U6c-KT-Frr" secondAttribute="trailing" constant="119" id="6w7-Zm-wbD"/>
+                            <constraint firstItem="U6c-KT-Frr" firstAttribute="leading" secondItem="jVh-ez-rS8" secondAttribute="leading" constant="118" id="HNU-sN-MbG"/>
+                            <constraint firstItem="jVh-ez-rS8" firstAttribute="bottom" secondItem="Hsz-Vu-L88" secondAttribute="bottom" constant="6" id="Jms-UC-Mve"/>
+                            <constraint firstItem="Hsz-Vu-L88" firstAttribute="leading" secondItem="jVh-ez-rS8" secondAttribute="leading" constant="16" id="Lvl-p2-Uca"/>
+                            <constraint firstItem="U6c-KT-Frr" firstAttribute="top" secondItem="xdj-q3-YYj" secondAttribute="bottom" constant="22" id="bIG-4K-Xzc"/>
+                            <constraint firstItem="jVh-ez-rS8" firstAttribute="trailing" secondItem="Hsz-Vu-L88" secondAttribute="trailing" constant="16" id="rz5-K3-OlS"/>
+                            <constraint firstItem="xdj-q3-YYj" firstAttribute="leading" secondItem="jVh-ez-rS8" secondAttribute="leading" constant="16" id="sxm-rr-dXq"/>
+                            <constraint firstItem="jVh-ez-rS8" firstAttribute="trailing" secondItem="xdj-q3-YYj" secondAttribute="trailing" constant="16" id="u1P-OP-S8u"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jVh-ez-rS8"/>
                     </view>
                     <navigationItem key="navigationItem" title="Recentre" id="syP-NY-UVQ"/>
                     <connections>
                         <outlet property="imageScrollView" destination="xdj-q3-YYj" id="a2t-wg-xxL"/>
+                        <outlet property="previewImage" destination="U6c-KT-Frr" id="Hsi-mb-WdG"/>
                         <outlet property="saveImagePositionButton" destination="Hsz-Vu-L88" id="vJO-Zz-z3L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J6o-9f-L80" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1985" y="99"/>
+            <point key="canvasLocation" x="1984.8" y="98.50074962518741"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KQF-gQ-YvR">
