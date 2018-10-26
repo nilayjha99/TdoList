@@ -71,14 +71,31 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         } else {
             contentsFrame.origin.y = 0
         }
-        
+        print("-------------")
+        print(contentsFrame)
+        print(self.imageScrollView.zoomScale)
         self.imageView.frame = contentsFrame
     }
     
     @IBAction func avf(_ sender: Any) {
-        saveAndCropImage()
+        //saveAndCropImage()
+        aev()
     }
   
+    func aev() {
+        let offset = self.imageScrollView.contentOffset
+        print(offset)
+        print(self.imageScrollView.contentScaleFactor)
+        setOffsets()
+    }
+    
+    func setOffsets() {
+        self.imageScrollView.setZoomScale(0.20668766012642115, animated: true)
+        self.imageView.frame = CGRect(x: 0.0, y: 0.0, width: 620.0629803792633, height: 413.78869557309474)
+//        let a = CGPoint(x: -220.0, y: -174.0)
+//        self.imageScrollView.setContentOffset(a, animated: true)
+    }
+    
     func saveAndCropImage() {
         UIGraphicsBeginImageContextWithOptions(self.imageScrollView.bounds.size, true, UIScreen.main.scale)
         let offset = self.imageScrollView.contentOffset
