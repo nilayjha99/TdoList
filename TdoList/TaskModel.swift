@@ -15,9 +15,9 @@ class TaskModel: NSObject, NSCoding {
     var dateCreated: String
     var dueDate: String
     var priority: Int
-    var photo: UIImage
+    var photo: UIImage?
     var thumbnail: UIImage?
-    var imageFrameOffset: CGPoint?
+    var imageFrameOffset: CGRect?
     var zoomLevel: CGFloat?
     var notes: String?
     
@@ -83,7 +83,7 @@ class TaskModel: NSObject, NSCoding {
         }
         
         let Thumbnail = aDecoder.decodeObject(forKey: PropertyKey.thumbnail) as? UIImage
-        let ImageFrameOffset = aDecoder.decodeObject(forKey: PropertyKey.imageFrameOffset) as? CGPoint
+        let ImageFrameOffset = aDecoder.decodeObject(forKey: PropertyKey.imageFrameOffset) as? CGRect
         let ZoomLevel = aDecoder.decodeObject(forKey: PropertyKey.zoomLevel) as? CGFloat
         let Notes = aDecoder.decodeObject(forKey: PropertyKey.notes) as? String
         
@@ -107,8 +107,8 @@ class TaskModel: NSObject, NSCoding {
      
      */
     init?(title: String, dateCreated: String, dueDate: String,
-         priority: Int,photo: UIImage, thumbnail: UIImage? = nil,
-         imageFrameOffset: CGPoint?  = nil, zoomLevel: CGFloat? = nil,notes: String? = nil) {
+         priority: Int,photo: UIImage?, thumbnail: UIImage? = nil,
+         imageFrameOffset: CGRect?  = nil, zoomLevel: CGFloat? = nil,notes: String? = nil) {
     
         // Theese fields must not be empty
         guard !(title.isEmpty || dateCreated.isEmpty || dueDate.isEmpty) else {
@@ -132,7 +132,7 @@ class TaskModel: NSObject, NSCoding {
         self.dateFormatter.dateStyle = .medium
         self.dateFormatter.timeStyle = .short
         self.dateFormatter.timeZone = TimeZone.current
-        self.tmpDate = self.dateFormatter.date(from: self.dueDate) as? Date
+        self.tmpDate = self.dateFormatter.date(from: self.dueDate)
     }
    
     func getDateFromString(_ dateString: String) -> Date {
@@ -143,13 +143,13 @@ class TaskModel: NSObject, NSCoding {
         return self.dateFormatter.string(from: dateTime)
     }
     
-    func updateThumbnail(thumbnail: UIImage, frameOffset: CGPoint, zoomLevel: CGFloat) {
+    func updateThumbnail(thumbnail: UIImage, frameOffset: CGRect, zoomLevel: CGFloat) {
         self.thumbnail = thumbnail
         self.imageFrameOffset = frameOffset
         self.zoomLevel = zoomLevel
     }
     
-    func updateImageDetails(photo: UIImage, thumbnail: UIImage, frameOffset: CGPoint, zoomLevel: CGFloat) {
+    func updateImageDetails(photo: UIImage, thumbnail: UIImage, frameOffset: CGRect, zoomLevel: CGFloat) {
         self.photo = photo
         self.updateThumbnail(thumbnail: thumbnail, frameOffset: frameOffset, zoomLevel: zoomLevel)
     }

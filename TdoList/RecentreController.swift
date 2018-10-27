@@ -13,8 +13,9 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     public var imageToRecentre: UIImage!
     public var screenshot: UIImage!
     var imageView = UIImageView()
+    var task: TaskModel?
     
-    @IBOutlet weak var previewImage: UIImageView!
+   // @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var saveImagePositionButton: UIButton!
     
@@ -29,9 +30,10 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     
     func loadImageToScroll() {
         
-        guard self.imageToRecentre != nil else {
-            fatalError("qqqqqqq")
+        guard self.task != nil else {
+            fatalError("Error in getting task details")
         }
+        self.imageToRecentre = self.task?.photo
         
         self.imageView.image = self.imageToRecentre
         self.imageView.contentMode = .center
@@ -54,6 +56,10 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         self.imageScrollView.zoomScale = minScale
         
         self.imageScrollView.addSubview(self.imageView)
+        
+        if self.task?.zoomLevel != nil {
+            self.setOffsets()
+        }
     }
     
     func centreScrollViewContents() {
@@ -71,29 +77,16 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         } else {
             contentsFrame.origin.y = 0
         }
-        print("-------------")
-        print(contentsFrame)
-        print(self.imageScrollView.zoomScale)
         self.imageView.frame = contentsFrame
     }
     
     @IBAction func avf(_ sender: Any) {
-        //saveAndCropImage()
-        aev()
-    }
-  
-    func aev() {
-        let offset = self.imageScrollView.contentOffset
-        print(offset)
-        print(self.imageScrollView.contentScaleFactor)
-        setOffsets()
+        self.saveAndCropImage()
     }
     
     func setOffsets() {
-        self.imageScrollView.setZoomScale(0.20668766012642115, animated: true)
-        self.imageView.frame = CGRect(x: 0.0, y: 0.0, width: 620.0629803792633, height: 413.78869557309474)
-//        let a = CGPoint(x: -220.0, y: -174.0)
-//        self.imageScrollView.setContentOffset(a, animated: true)
+        self.imageScrollView.setZoomScale((self.task?.zoomLevel)!, animated: true)
+        self.imageView.frame = (self.task?.imageFrameOffset)!
     }
     
     func saveAndCropImage() {
@@ -106,7 +99,8 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         self.imageScrollView.layer.render(in: context)
         self.screenshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.previewImage.image = screenshot
+        self.task?.updateThumbnail(thumbnail: screenshot, frameOffset: self.imageView.frame, zoomLevel: self.imageScrollView!.zoomScale)
+        dismiss(animated: true, completion: nil)
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
@@ -117,4 +111,7 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         return self.imageView
     }
     
+    @IBAction func cancelRecentre(_ sender: Any) {
+           dismiss(animated: true, completion: nil)
+    }
 }

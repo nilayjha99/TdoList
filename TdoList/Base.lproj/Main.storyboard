@@ -117,7 +117,7 @@
                                                         <rect key="frame" x="0.0" y="581.5" width="359" height="30"/>
                                                         <state key="normal" title="Recenter"/>
                                                         <connections>
-                                                            <segue destination="XOk-Ei-ZZw" kind="show" identifier="recentreImage" id="OV4-n0-PQ0"/>
+                                                            <segue destination="XOk-Ei-ZZw" kind="modal" identifier="recentreImage" id="QOo-Tl-epb"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VqW-U6-dpw">
@@ -216,7 +216,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="194" translatesAutoresizingMaskIntoConstraints="NO" id="ozM-gI-8WG">
-                                <rect key="frame" x="27" y="76" width="321" height="562"/>
+                                <rect key="frame" x="28" y="32" width="320" height="564"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdj-q3-YYj">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
@@ -226,25 +226,59 @@
                                             <constraint firstAttribute="width" constant="320" id="dF8-iw-g83"/>
                                         </constraints>
                                     </scrollView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsz-Vu-L88">
-                                        <rect key="frame" x="0.0" y="514" width="321" height="48"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="Save">
-                                            <color key="titleColor" red="0.94380804019999998" green="0.94380804019999998" blue="0.94380804019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="avf:" destination="XOk-Ei-ZZw" eventType="touchUpInside" id="Ukl-GG-whX"/>
-                                        </connections>
-                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vqw-Io-EUB">
+                                        <rect key="frame" x="0.0" y="514" width="320" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hsz-Vu-L88">
+                                                <rect key="frame" x="159" y="0.0" width="161" height="48"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="161" id="r8A-RV-VPP"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <state key="normal" title="Save">
+                                                    <color key="titleColor" red="0.94380804019999998" green="0.94380804019999998" blue="0.94380804019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="avf:" destination="XOk-Ei-ZZw" eventType="touchUpInside" id="Ukl-GG-whX"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tvM-YD-Mc3">
+                                                <rect key="frame" x="0.0" y="0.0" width="161" height="48"/>
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="161" id="HfF-18-mQj"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <color key="tintColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Cancel">
+                                                    <color key="titleColor" red="0.94380804019999998" green="0.94380804019999998" blue="0.94380804019999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="cancelRecentre:" destination="XOk-Ei-ZZw" eventType="touchUpInside" id="WHm-vk-HId"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="Hsz-Vu-L88" firstAttribute="top" secondItem="Vqw-Io-EUB" secondAttribute="top" id="I0S-8i-tSM"/>
+                                            <constraint firstItem="Hsz-Vu-L88" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Vqw-Io-EUB" secondAttribute="leading" constant="20" symbolic="YES" id="RtF-pz-AaA"/>
+                                            <constraint firstItem="tvM-YD-Mc3" firstAttribute="top" secondItem="Vqw-Io-EUB" secondAttribute="top" id="acb-fN-ooC"/>
+                                            <constraint firstAttribute="trailing" secondItem="Hsz-Vu-L88" secondAttribute="trailing" id="b0r-AC-Qfj"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tvM-YD-Mc3" secondAttribute="trailing" constant="20" symbolic="YES" id="cN4-Th-ZJB"/>
+                                            <constraint firstItem="tvM-YD-Mc3" firstAttribute="top" secondItem="Vqw-Io-EUB" secondAttribute="top" id="cin-gS-AVc"/>
+                                            <constraint firstItem="tvM-YD-Mc3" firstAttribute="leading" secondItem="Vqw-Io-EUB" secondAttribute="leading" id="k6k-Ty-ZOz"/>
+                                            <constraint firstItem="tvM-YD-Mc3" firstAttribute="leading" secondItem="Vqw-Io-EUB" secondAttribute="leading" id="shl-Am-3Wb"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Hsz-Vu-L88" secondAttribute="bottom" id="46y-4p-ZNQ"/>
-                                    <constraint firstItem="Hsz-Vu-L88" firstAttribute="leading" secondItem="ozM-gI-8WG" secondAttribute="leading" id="7CH-kZ-dcb"/>
-                                    <constraint firstAttribute="trailing" secondItem="Hsz-Vu-L88" secondAttribute="trailing" id="Ger-qf-CEh"/>
-                                    <constraint firstItem="Hsz-Vu-L88" firstAttribute="centerX" secondItem="ozM-gI-8WG" secondAttribute="centerX" id="NIW-DI-G3l"/>
+                                    <constraint firstAttribute="height" constant="564" id="QKf-QK-Rys"/>
+                                    <constraint firstItem="Vqw-Io-EUB" firstAttribute="leading" secondItem="ozM-gI-8WG" secondAttribute="leading" id="YeW-qy-3Jw"/>
                                     <constraint firstItem="xdj-q3-YYj" firstAttribute="leading" secondItem="ozM-gI-8WG" secondAttribute="leading" id="cKg-T1-GVK"/>
+                                    <constraint firstAttribute="bottom" secondItem="Vqw-Io-EUB" secondAttribute="bottom" id="cdk-b7-igG"/>
                                     <constraint firstItem="xdj-q3-YYj" firstAttribute="top" secondItem="ozM-gI-8WG" secondAttribute="top" id="dW0-ZK-JCt"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vqw-Io-EUB" secondAttribute="trailing" id="oiF-pR-Zuw"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -252,7 +286,6 @@
                         <constraints>
                             <constraint firstItem="jVh-ez-rS8" firstAttribute="trailing" secondItem="ozM-gI-8WG" secondAttribute="trailing" constant="27" id="2Uw-Fj-BxU"/>
                             <constraint firstItem="ozM-gI-8WG" firstAttribute="top" secondItem="jVh-ez-rS8" secondAttribute="top" constant="12" id="3Qj-a9-gwa"/>
-                            <constraint firstItem="ozM-gI-8WG" firstAttribute="centerX" secondItem="Vmt-SC-TYB" secondAttribute="centerX" id="XJO-Sw-zuc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jVh-ez-rS8"/>
                     </view>
@@ -264,7 +297,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J6o-9f-L80" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1984.8" y="98.50074962518741"/>
+            <point key="canvasLocation" x="2309.5999999999999" y="98.50074962518741"/>
         </scene>
         <!--Todo List Table Viw Controller-->
         <scene sceneID="qqY-PB-Rxq">

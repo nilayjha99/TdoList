@@ -10,85 +10,53 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // MARK: - Widget Outlets -
     @IBOutlet weak var priorityIndicator: UIButton!
     @IBOutlet weak var taskPhoto: UIImageView!
     @IBOutlet weak var priorityField: UITextField!
     @IBOutlet weak var dueDateField: UITextField!
+    
+    // MARK: - Private Properties -
     private var datePicker : UIDatePicker?
     private var picker: UIPickerView?
     private var selectedPrioriy: String = "low"
-    let priorities = ["low", "medium", "high"]
     
+    // MARK: - Properties -
+    let priorities = ["low", "medium", "high"]
+    var task: TaskModel?
+
+    // MARK: - Lifecycle Hooks -
     override func viewDidLoad() {
         super.viewDidLoad()
         self.priorityField.text = self.priorities[0]
         self.setPriorityIndicatorColor()
         self.initPriorityPicker()
         self.initDatePicker()
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    // MARK: - Seague Handlers -
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         let dest = segue.identifier ?? ""
         if dest == "recentreImage" {
-        let abc = segue.destination as? RecentreController
-            abc?.imageToRecentre = taskPhoto.image
-        }
-        
-    }
-    
-    // code for image selection
-    @IBAction func choosePhoto(_ sender: UITapGestureRecognizer) {
-        
-        // image controller
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        
-        // build action sheet
-        let imageActionSheet = UIAlertController(title: "Photo Source", message: "choose a source.", preferredStyle: .actionSheet)
-        
-        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction) in
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imagePickerController.sourceType = .camera
-            self.present(imagePickerController, animated: true, completion: nil)
-            } else {
-                print("no camera")
+            guard let abc = segue.destination as? RecentreController else {
+               fatalError("wtf")
             }
-        })
-        
-        imageActionSheet.addAction(cameraAction)
-        
-        let galleryAction = UIAlertAction(title: "Photo Gallery", style: .default, handler: { (action: UIAlertAction) in
-            imagePickerController.sourceType = .photoLibrary
-            self.present(imagePickerController, animated: true, completion: nil)
-
-        })
-        
-        imageActionSheet.addAction(galleryAction)
-        
-        let cancelActon = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        imageActionSheet.addAction(cancelActon)
-        
-        present(imageActionSheet, animated: true)
-    }
-    
-    private func setPriorityIndicatorColor() {
-        var color: UIColor
-        switch (self.priorityField.text) {
-        case self.priorities[0]:
-            color = UIColor.green
-        case self.priorities[1]:
-            color = UIColor.orange
-        case self.priorities[2]:
-            color = UIColor.red
-        default:
-            color = UIColor.black
-            print("nothing")
+            abc.imageToRecentre = taskPhoto.image
+            abc.task = task
         }
-        self.priorityIndicator.backgroundColor = color
+        
     }
+
+}
+
+// MARK: - DatePicker Section -
+extension ViewController {
     // code for date picker
     private func initDatePicker() {
         // code for toolbar
@@ -100,10 +68,10 @@ class ViewController: UIViewController {
         
         // add Immediate button
         let immediatButton = UIBarButtonItem(title: "Immediate", style: .done, target: nil, action: #selector(dueDateImmediateTapped))
-
+        
         // add unspecify Button
         let unspecifyButton = UIBarButtonItem(title: "Unspecified", style: .done, target: nil, action: #selector(dueDateUnspecifyTapped))
-
+        
         toolbar.setItems([doneButton, immediatButton, unspecifyButton], animated: true)
         
         //add toolbar to date picker
@@ -112,7 +80,7 @@ class ViewController: UIViewController {
         // code to handle the duedate date input
         self.datePicker =  UIDatePicker()
         self.datePicker?.datePickerMode = .dateAndTime
-
+        
         // set datepicker as input control
         self.dueDateField.inputView = self.datePicker
     }
@@ -135,7 +103,12 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
     
- 
+    
+}
+
+// MARK: - PriorityPicker Section -
+extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    
     // code for priority picker
     private func initPriorityPicker() {
         // code for toolbar
@@ -160,9 +133,7 @@ class ViewController: UIViewController {
         self.setPriorityIndicatorColor()
         view.endEditing(true)
     }
-}
-
-extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    
     // code for custom picker to take input the priority
     // returns the number of 'columns' to display.
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -184,9 +155,64 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.priorities[row]
     }
+    
+    private func setPriorityIndicatorColor() {
+        var color: UIColor
+        switch (self.priorityField.text) {
+        case self.priorities[0]:
+            color = UIColor.green
+        case self.priorities[1]:
+            color = UIColor.orange
+        case self.priorities[2]:
+            color = UIColor.red
+        default:
+            color = UIColor.black
+            print("nothing")
+        }
+        self.priorityIndicator.backgroundColor = color
+    }
 }
 
+// MARK: - ImagePicker Section -
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    // code for image selection
+    @IBAction func choosePhoto(_ sender: UITapGestureRecognizer) {
+        
+        // image controller
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        
+        // build action sheet
+        let imageActionSheet = UIAlertController(title: "Photo Source", message: "choose a source.", preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                imagePickerController.sourceType = .camera
+                self.present(imagePickerController, animated: true, completion: nil)
+            } else {
+                print("no camera")
+            }
+        })
+        
+        imageActionSheet.addAction(cameraAction)
+        
+        let galleryAction = UIAlertAction(title: "Photo Gallery", style: .default, handler: { (action: UIAlertAction) in
+            imagePickerController.sourceType = .photoLibrary
+            self.present(imagePickerController, animated: true, completion: nil)
+            
+        })
+        
+        imageActionSheet.addAction(galleryAction)
+        
+        let cancelActon = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        imageActionSheet.addAction(cancelActon)
+        
+        present(imageActionSheet, animated: true)
+    }
+    
+    
     //MARK: - UIImagePickerControllerDelegate -
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // if cancel is pressed from image picker
@@ -215,7 +241,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     }
 }
 
-
+// MARK: - Helper Functions -
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
     return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
