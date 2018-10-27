@@ -33,29 +33,50 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AOI-t7-ywa">
-                                                        <rect key="frame" x="0.0" y="31.5" width="359" height="31.5"/>
+                                                        <rect key="frame" x="0.0" y="31.5" width="359" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaG-cB-o56">
-                                                        <rect key="frame" x="0.0" y="74" width="76" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="72.5" width="76" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Unspecified" borderStyle="roundedRect" placeholder="Pick a Due Date For Task" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="leb-Dl-d8Q">
-                                                        <rect key="frame" x="0.0" y="105.5" width="359" height="30"/>
+                                                        <rect key="frame" x="0.0" y="104" width="359" height="30"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priority:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZi-8G-Tgg">
-                                                        <rect key="frame" x="0.0" y="146.5" width="59.5" height="20.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUl-JP-YFw">
+                                                        <rect key="frame" x="0.0" y="145" width="359" height="22"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priority:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZi-8G-Tgg">
+                                                                <rect key="frame" x="8" y="1" width="59.5" height="20.5"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xu-P4-PuH">
+                                                                <rect key="frame" x="335" y="0.0" width="20" height="20"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="20" id="5TN-Xh-zCC"/>
+                                                                    <constraint firstAttribute="height" constant="20" id="a7z-tM-kXz"/>
+                                                                </constraints>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="gZi-8G-Tgg" firstAttribute="top" secondItem="eUl-JP-YFw" secondAttribute="top" constant="1" id="68f-oS-Inv"/>
+                                                            <constraint firstItem="4xu-P4-PuH" firstAttribute="leading" secondItem="gZi-8G-Tgg" secondAttribute="trailing" constant="267.5" id="fhS-Ym-O9F"/>
+                                                            <constraint firstAttribute="trailing" secondItem="4xu-P4-PuH" secondAttribute="trailing" constant="4" id="oO2-iS-1a2"/>
+                                                            <constraint firstItem="4xu-P4-PuH" firstAttribute="top" secondItem="eUl-JP-YFw" secondAttribute="top" id="u3h-es-lY0"/>
+                                                            <constraint firstItem="gZi-8G-Tgg" firstAttribute="leading" secondItem="eUl-JP-YFw" secondAttribute="leading" constant="8" id="wK5-bH-aVz"/>
+                                                        </constraints>
+                                                    </view>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please choose a priority" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aE1-Hy-e1c">
                                                         <rect key="frame" x="0.0" y="178" width="359" height="30"/>
                                                         <nil key="textColor"/>
@@ -119,8 +140,6 @@
                                                 <constraints>
                                                     <constraint firstItem="JTv-TZ-aR4" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="0VI-vE-ca7"/>
                                                     <constraint firstAttribute="trailing" secondItem="UGl-K3-WCc" secondAttribute="trailing" id="6oj-Lk-Leq"/>
-                                                    <constraint firstItem="gZi-8G-Tgg" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="9W5-jg-QHf"/>
-                                                    <constraint firstAttribute="trailing" secondItem="aE1-Hy-e1c" secondAttribute="trailing" id="C82-vl-ibu"/>
                                                     <constraint firstAttribute="height" constant="782" id="FrM-Av-8aS"/>
                                                     <constraint firstAttribute="trailing" secondItem="leb-Dl-d8Q" secondAttribute="trailing" id="ImH-T1-twz"/>
                                                     <constraint firstItem="leb-Dl-d8Q" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="L2M-Uq-omY"/>
@@ -128,9 +147,11 @@
                                                     <constraint firstItem="VqW-U6-dpw" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="VRi-yY-TgE"/>
                                                     <constraint firstItem="S9D-hA-uvl" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="WvD-Gl-SIW"/>
                                                     <constraint firstAttribute="trailing" secondItem="AOI-t7-ywa" secondAttribute="trailing" id="bPb-8d-V6J"/>
+                                                    <constraint firstAttribute="trailing" secondItem="aE1-Hy-e1c" secondAttribute="trailing" id="hj1-7v-jtc"/>
+                                                    <constraint firstItem="aE1-Hy-e1c" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="jR4-jZ-jlc"/>
+                                                    <constraint firstItem="aE1-Hy-e1c" firstAttribute="top" secondItem="eUl-JP-YFw" secondAttribute="bottom" constant="11" id="jaL-2k-oqv"/>
                                                     <constraint firstItem="AOI-t7-ywa" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="nn1-se-e2K"/>
                                                     <constraint firstItem="UGl-K3-WCc" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="ogf-Fc-P1V"/>
-                                                    <constraint firstItem="aE1-Hy-e1c" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="otl-XC-uyS"/>
                                                     <constraint firstAttribute="trailing" secondItem="JTv-TZ-aR4" secondAttribute="trailing" id="rbs-jN-tNj"/>
                                                     <constraint firstItem="S1X-PO-Sse" firstAttribute="top" secondItem="VFn-Qo-sV1" secondAttribute="top" id="vXK-Ge-8I1"/>
                                                     <constraint firstItem="S1X-PO-Sse" firstAttribute="leading" secondItem="VFn-Qo-sV1" secondAttribute="leading" id="xAo-Dy-Mym"/>
@@ -173,6 +194,7 @@
                     <connections>
                         <outlet property="dueDateField" destination="leb-Dl-d8Q" id="aDL-7r-YbW"/>
                         <outlet property="priorityField" destination="aE1-Hy-e1c" id="H6C-9v-Xaa"/>
+                        <outlet property="priorityIndicator" destination="4xu-P4-PuH" id="VkG-qL-kkW"/>
                         <outlet property="taskPhoto" destination="0rH-B0-nk6" id="qNN-yI-SlK"/>
                     </connections>
                 </viewController>

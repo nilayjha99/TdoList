@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var priorityIndicator: UIButton!
     @IBOutlet weak var taskPhoto: UIImageView!
     @IBOutlet weak var priorityField: UITextField!
     @IBOutlet weak var dueDateField: UITextField!
@@ -20,6 +21,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.priorityField.text = self.priorities[0]
+        self.setPriorityIndicatorColor()
         self.initPriorityPicker()
         self.initDatePicker()
         // Do any additional setup after loading the view, typically from a nib.
@@ -71,7 +74,21 @@ class ViewController: UIViewController {
         present(imageActionSheet, animated: true)
     }
     
- 
+    private func setPriorityIndicatorColor() {
+        var color: UIColor
+        switch (self.priorityField.text) {
+        case self.priorities[0]:
+            color = UIColor.green
+        case self.priorities[1]:
+            color = UIColor.orange
+        case self.priorities[2]:
+            color = UIColor.red
+        default:
+            color = UIColor.black
+            print("nothing")
+        }
+        self.priorityIndicator.backgroundColor = color
+    }
     // code for date picker
     private func initDatePicker() {
         // code for toolbar
@@ -126,8 +143,10 @@ class ViewController: UIViewController {
         toolbar.sizeToFit()
         
         // add done button
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(priorityPickerDoneTapped))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(priorityPickerDoneTapped))
         toolbar.setItems([doneButton], animated: true)
+        
+        
         // code to handle priority input
         self.picker = UIPickerView()
         self.picker?.delegate = self
@@ -138,6 +157,7 @@ class ViewController: UIViewController {
     
     @objc private func priorityPickerDoneTapped() {
         self.priorityField.text = self.selectedPrioriy
+        self.setPriorityIndicatorColor()
         view.endEditing(true)
     }
 }
