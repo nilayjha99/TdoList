@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController {
 
     @IBOutlet weak var taskPhoto: UIImageView!
     @IBOutlet weak var priorityField: UITextField!
@@ -16,7 +16,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     private var datePicker : UIDatePicker?
     private var picker: UIPickerView?
     private var selectedPrioriy: String = "low"
-    
+    let priorities = ["low", "medium", "high"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,33 +71,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         present(imageActionSheet, animated: true)
     }
     
-    //MARK: - UIImagePickerControllerDelegate -
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        // if cancel is pressed from image picker
-        // then return to current view closing photo library
-        // Dismiss the picker if the user canceled.
-        dismiss(animated: true, completion: nil)
-    }
-    
-    //MARK: - UIImagePickerControllerDelegate -
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // Local variable inserted by Swift 4.2 migrator.
-        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-        
-        // if user selects an image process the input
-        // The info dictionary may contain multiple representations of the image. You want to use the original.
-        guard let selectedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else {
-            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
-        }
-
-        
-        // Set photoImageView to display the selected image.
-        self.taskPhoto.image = selectedImage
-        
-        // Dismiss the picker.
-        dismiss(animated: true, completion: nil)
-    }
-
+ 
     // code for date picker
     private func initDatePicker() {
         // code for toolbar
@@ -166,8 +140,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.priorityField.text = self.selectedPrioriy
         view.endEditing(true)
     }
-    
-    let priorities = ["low", "medium", "high"]
+}
+
+extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     // code for custom picker to take input the priority
     // returns the number of 'columns' to display.
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -189,9 +164,37 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return self.priorities[row]
     }
-    
-    
 }
+
+extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    //MARK: - UIImagePickerControllerDelegate -
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        // if cancel is pressed from image picker
+        // then return to current view closing photo library
+        // Dismiss the picker if the user canceled.
+        dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: - UIImagePickerControllerDelegate -
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        
+        // if user selects an image process the input
+        // The info dictionary may contain multiple representations of the image. You want to use the original.
+        guard let selectedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        }
+        
+        
+        // Set photoImageView to display the selected image.
+        self.taskPhoto.image = selectedImage
+        
+        // Dismiss the picker.
+        dismiss(animated: true, completion: nil)
+    }
+}
+
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
