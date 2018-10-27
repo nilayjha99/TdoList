@@ -11,9 +11,13 @@ import Foundation
 public class ListModel {
     var taskList = [TaskModel]()
     
-    func sortByDate(tasks: [TaskModel]) -> [TaskModel] {
-        
-        return tasks
+    // sort by date descending
+    func sortByDate() {
+        self.taskList.sort(by: { $0.tmpDate?.compare($1.tmpDate!) == .orderedDescending })
     }
    
+    // sort by priority ascending
+    func sortByPriority() {
+         self.taskList.sort(by: { $0.priority < $1.priority})
+    }
 }

@@ -14,13 +14,15 @@ class TaskModel: NSObject, NSCoding {
     var title: String
     var dateCreated: String
     var dueDate: String
-    var priority: String
+    var priority: Int
     var photo: UIImage
     var thumbnail: UIImage?
     var imageFrameOffset: CGPoint?
     var zoomLevel: CGFloat?
     var notes: String?
+    
     private let dateFormatter = DateFormatter()
+    var tmpDate: Date?
     
     //MARK: - Archiving Paths -
     // lookup the curent application's documents directory and create the file URL by appending meals to the end of the documents URL.
@@ -70,7 +72,7 @@ class TaskModel: NSObject, NSCoding {
             return nil
         }
         
-        guard let Priority = aDecoder.decodeObject(forKey: PropertyKey.priority) as? String else {
+        guard let Priority = aDecoder.decodeObject(forKey: PropertyKey.priority) as? Int else {
             MyLogger.logDebug("Unable to decode the priority for a task object.")
             return nil
         }
@@ -105,11 +107,11 @@ class TaskModel: NSObject, NSCoding {
      
      */
     init?(title: String, dateCreated: String, dueDate: String,
-         priority: String,photo: UIImage, thumbnail: UIImage? = nil,
+         priority: Int,photo: UIImage, thumbnail: UIImage? = nil,
          imageFrameOffset: CGPoint?  = nil, zoomLevel: CGFloat? = nil,notes: String? = nil) {
     
         // Theese fields must not be empty
-        guard (title.isEmpty || dateCreated.isEmpty || dueDate.isEmpty || priority.isEmpty) else {
+        guard !(title.isEmpty || dateCreated.isEmpty || dueDate.isEmpty) else {
             return nil
         }
 
@@ -130,16 +132,9 @@ class TaskModel: NSObject, NSCoding {
         self.dateFormatter.dateStyle = .medium
         self.dateFormatter.timeStyle = .short
         self.dateFormatter.timeZone = TimeZone.current
+        self.tmpDate = self.dateFormatter.date(from: self.dueDate) as? Date
     }
    
-    
-    
-
-}
-
-
-extension TaskModel {
-  
     func getDateFromString(_ dateString: String) -> Date {
         return self.dateFormatter.date(from: dateString)!
     }
@@ -158,4 +153,7 @@ extension TaskModel {
         self.photo = photo
         self.updateThumbnail(thumbnail: thumbnail, frameOffset: frameOffset, zoomLevel: zoomLevel)
     }
+    
+
 }
+
