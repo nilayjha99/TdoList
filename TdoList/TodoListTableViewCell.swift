@@ -9,5 +9,18 @@
 import UIKit
 
 class TodoListTableViewCell: UITableViewCell {
+    @IBOutlet weak var taskDueDate: UILabel!
+    @IBOutlet weak var taskTitle: UILabel!
+    @IBOutlet weak var priorityIndicator: UIButton!
+    @IBOutlet weak var taskThumbnail: UIImageView!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        // Configure the view for the selected state
+    }
 }

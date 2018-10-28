@@ -19,7 +19,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var notesField: UITextView!
     @IBOutlet weak var recentreButton: UIButton!
-  
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     // MARK: - Private Properties -
@@ -67,8 +66,9 @@ class ViewController: UIViewController {
         self.priorityField.text = self.priorities[((self.task?.priority)!)]
         self.setPriorityIndicatorColor()
         
-        if self.task?.photo != nil {
-            self.setTaskThumbnail()
+        if self.task?.imageDetails?.photo != nil {
+            self.taskPhoto.image = self.task?.imageDetails?.thumbnail
+            self.taskImage = self.task?.imageDetails
         } else {
             self.recentreButton.isEnabled = false
         }
@@ -79,11 +79,6 @@ class ViewController: UIViewController {
             self.notesField.text = ""
         }
         self.updateSaveButtonState()
-    }
-    
-    func setTaskThumbnail() {
-        self.taskPhoto.image = self.task?.thumbnail
-        self.taskImage = TaskImageInfo(photo: (self.task?.photo)!, thumbnail: (self.task?.thumbnail)!)
     }
     
     // MARK: - Private Methods -
@@ -97,14 +92,29 @@ class ViewController: UIViewController {
     // MARK: - Seague Handlers -
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
+       
         let dest = segue.identifier ?? ""
         if dest == "recentreImage" {
             guard let abc = segue.destination as? RecentreController else {
-               fatalError("wtf")
+                fatalError("wtf")
             }
-//            abc.imageToRecentre = taskPhoto.image
+            //            abc.imageToRecentre = taskPhoto.image
             abc.taskImage = taskImage
         }
+        
+        guard let button = sender as? UIBarButtonItem, button === self.saveButton else {
+            MyLogger.logDebug("save meal button is not pressed")
+            return
+        }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        self.task = TaskModel(title: self.titleField.text!,
+                              dateCreated: dateFormatter.string(from: Date()),
+                              dueDate: self.dueDateField.text!,
+                              priority: self.priorities.firstIndex(of: self.priorityField.text!)!,
+                              imageDetails: self.taskImage ?? nil, notes: self.notesField.text ?? nil)
         
     }
 

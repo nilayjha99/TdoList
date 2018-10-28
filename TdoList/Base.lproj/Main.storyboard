@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GCK-oK-SdI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FwR-wu-Buu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -188,8 +188,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Task" id="IMM-Az-Ivz">
                         <barButtonItem key="backBarButtonItem" title="Cancel" id="7Wy-3O-r5c"/>
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="CJA-gk-da5"/>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="iP5-wt-QbS"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="iP5-wt-QbS">
+                            <connections>
+                                <segue destination="5Ze-P6-9Y7" kind="unwind" unwindAction="unwindToTaskList:" id="dWW-oy-8Qx"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="dueDateField" destination="leb-Dl-d8Q" id="aDL-7r-YbW"/>
@@ -203,13 +206,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <exit id="5Ze-P6-9Y7" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="jwN-mM-2Ff">
                     <connections>
                         <action selector="choosePhoto:" destination="BYZ-38-t0r" id="wOv-19-m8G"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1064.8" y="99.400299850074973"/>
+            <point key="canvasLocation" x="2030" y="83"/>
         </scene>
         <!--Recentre-->
         <scene sceneID="VL2-Em-Lxn">
@@ -301,9 +305,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J6o-9f-L80" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2309.5999999999999" y="98.50074962518741"/>
+            <point key="canvasLocation" x="3248.8000000000002" y="98.50074962518741"/>
         </scene>
-        <!--Todo List Table Viw Controller-->
+        <!--Task List-->
         <scene sceneID="qqY-PB-Rxq">
             <objects>
                 <tableViewController id="ULO-Wp-JTv" customClass="TodoListTableViwController" customModule="TdoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -312,7 +316,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="95" id="YF6-V7-x9z" customClass="TodoListTableViewCell" customModule="TdoList" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="taskTableCell" rowHeight="95" id="YF6-V7-x9z" customClass="TodoListTableViewCell" customModule="TdoList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="95"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YF6-V7-x9z" id="Gpx-PP-NKb">
@@ -357,7 +361,7 @@
                                                 <constraint firstAttribute="width" constant="19" id="URj-x7-DhW"/>
                                             </constraints>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1TC-gq-sO9">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Default-ask-Image" translatesAutoresizingMaskIntoConstraints="NO" id="1TC-gq-sO9">
                                             <rect key="frame" x="5" y="2" width="90" height="90"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="1TC-gq-sO9" secondAttribute="height" multiplier="1:1" id="3ts-FY-g1p"/>
@@ -386,6 +390,13 @@
                                         <constraint firstItem="pM1-VJ-cyD" firstAttribute="top" secondItem="Gpx-PP-NKb" secondAttribute="topMargin" id="ula-lD-kps"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="priorityIndicator" destination="cFl-a4-sQ4" id="fGO-aA-e9V"/>
+                                    <outlet property="taskDueDate" destination="fLs-ma-Ct6" id="H9n-6w-0Qt"/>
+                                    <outlet property="taskThumbnail" destination="1TC-gq-sO9" id="FHi-Im-HBn"/>
+                                    <outlet property="taskTitle" destination="4ST-hI-Cae" id="uwj-cm-QtY"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="ShowDetails" id="R2H-Hb-riy"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -393,10 +404,17 @@
                             <outlet property="delegate" destination="ULO-Wp-JTv" id="qNX-1R-jiC"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Task List" id="K9s-gP-hBm">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="5fp-2O-71e">
+                            <connections>
+                                <segue destination="GCK-oK-SdI" kind="presentation" identifier="AddItem" id="zrq-1n-maH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jQ2-Sl-e2P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-967.20000000000005" y="89.505247376311857"/>
+            <point key="canvasLocation" x="164" y="90"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KQF-gQ-YvR">
@@ -414,10 +432,31 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7pc-kk-q1K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="156" y="99"/>
+            <point key="canvasLocation" x="1071" y="453"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="g4e-ls-dYr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FwR-wu-Buu" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ry3-q6-Klx">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ULO-Wp-JTv" kind="relationship" relationship="rootViewController" id="Iz2-zs-8yK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bn0-LR-8mD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-967.20000000000005" y="89.505247376311857"/>
         </scene>
     </scenes>
     <resources>
         <image name="Default-ask-Image" width="320" height="320"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="R2H-Hb-riy"/>
+    </inferredMetricsTieBreakers>
 </document>
