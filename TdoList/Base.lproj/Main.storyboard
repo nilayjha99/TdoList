@@ -117,7 +117,7 @@
                                                         <rect key="frame" x="0.0" y="581.5" width="359" height="30"/>
                                                         <state key="normal" title="Recenter"/>
                                                         <connections>
-                                                            <segue destination="XOk-Ei-ZZw" kind="modal" identifier="recentreImage" id="QOo-Tl-epb"/>
+                                                            <segue destination="XOk-Ei-ZZw" kind="presentation" identifier="recentreImage" id="QOo-Tl-epb"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VqW-U6-dpw">
@@ -193,9 +193,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="dueDateField" destination="leb-Dl-d8Q" id="aDL-7r-YbW"/>
+                        <outlet property="notesField" destination="UGl-K3-WCc" id="Ti5-V8-XGy"/>
                         <outlet property="priorityField" destination="aE1-Hy-e1c" id="H6C-9v-Xaa"/>
                         <outlet property="priorityIndicator" destination="4xu-P4-PuH" id="VkG-qL-kkW"/>
+                        <outlet property="recentreButton" destination="JTv-TZ-aR4" id="0J5-ds-Kud"/>
                         <outlet property="taskPhoto" destination="0rH-B0-nk6" id="qNN-yI-SlK"/>
+                        <outlet property="titleField" destination="AOI-t7-ywa" id="toq-qI-qWk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

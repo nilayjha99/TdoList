@@ -8,6 +8,26 @@
 
 import UIKit
 
+class TaskImageInfo {
+    var photo: UIImage
+    var thumbnail: UIImage
+    var imageFrameOffset: CGRect?
+    var zoomLevel: CGFloat?
+    var offset_X: CGFloat?
+    var offset_Y: CGFloat?
+    
+    init(photo: UIImage, thumbnail: UIImage) {
+        self.photo = photo
+        self.thumbnail = thumbnail
+    }
+    
+    func updateThumbnail(thumbnail: UIImage, frameOffset: CGRect, zoomLevel: CGFloat) {
+        self.thumbnail = thumbnail
+        self.imageFrameOffset = frameOffset
+        self.zoomLevel = zoomLevel
+    }
+}
+
 class ViewController: UIViewController {
 
     // MARK: - Widget Outlets -
@@ -15,6 +35,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var taskPhoto: UIImageView!
     @IBOutlet weak var priorityField: UITextField!
     @IBOutlet weak var dueDateField: UITextField!
+    @IBOutlet weak var titleField: UITextField!
+    @IBOutlet weak var notesField: UITextView!
+    @IBOutlet weak var recentreButton: UIButton!
+  
     
     // MARK: - Private Properties -
     private var datePicker : UIDatePicker?
@@ -24,19 +48,55 @@ class ViewController: UIViewController {
     // MARK: - Properties -
     let priorities = ["low", "medium", "high"]
     var task: TaskModel?
+    var taskImage: TaskImageInfo?
 
     // MARK: - Lifecycle Hooks -
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.priorityField.text = self.priorities[0]
-        self.setPriorityIndicatorColor()
         self.initPriorityPicker()
         self.initDatePicker()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.populateTaskValues()
+    }
+    
+    func populateTaskValues() {
         
+        guard self.task != nil else {
+            if self.taskImage == nil {
+            self.recentreButton.isEnabled = false
+            } else {
+                self.taskPhoto.image = self.taskImage?.thumbnail
+            }
+            self.notesField.text = ""
+            self.priorityField.text = self.priorities[0]
+            self.setPriorityIndicatorColor()
+            return
+        }
+        
+        self.titleField.text = self.task?.title
+        self.dueDateField.text = self.task?.dueDate
+        self.priorityField.text = self.priorities[((self.task?.priority)!)]
+        self.setPriorityIndicatorColor()
+        
+        if self.task?.photo != nil {
+            self.setTaskThumbnail()
+        } else {
+            self.recentreButton.isEnabled = false
+        }
+        
+        if self.task?.notes != nil {
+            self.notesField.text = self.task?.notes
+        } else {
+            self.notesField.text = ""
+        }
+    }
+    
+    func setTaskThumbnail() {
+        self.taskPhoto.image = self.task?.thumbnail
+        self.taskImage = TaskImageInfo(photo: (self.task?.photo)!, thumbnail: (self.task?.thumbnail)!)
     }
     
     // MARK: - Seague Handlers -
@@ -47,8 +107,8 @@ class ViewController: UIViewController {
             guard let abc = segue.destination as? RecentreController else {
                fatalError("wtf")
             }
-            abc.imageToRecentre = taskPhoto.image
-            abc.task = task
+//            abc.imageToRecentre = taskPhoto.image
+            abc.taskImage = taskImage
         }
         
     }
@@ -235,7 +295,10 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         
         // Set photoImageView to display the selected image.
         self.taskPhoto.image = selectedImage
-        
+        self.taskImage = TaskImageInfo(photo: self.taskPhoto.image!, thumbnail: self.taskPhoto.image!)
+        self.taskImage?.zoomLevel = nil
+        self.taskImage?.imageFrameOffset = nil
+        self.recentreButton.isEnabled = true
         // Dismiss the picker.
         dismiss(animated: true, completion: nil)
     }

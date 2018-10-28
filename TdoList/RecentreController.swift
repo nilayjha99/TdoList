@@ -13,7 +13,7 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     public var imageToRecentre: UIImage!
     public var screenshot: UIImage!
     var imageView = UIImageView()
-    var task: TaskModel?
+    var taskImage: TaskImageInfo?
     
    // @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var imageScrollView: UIScrollView!
@@ -30,10 +30,10 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     
     func loadImageToScroll() {
         
-        guard self.task != nil else {
+        guard self.taskImage != nil else {
             fatalError("Error in getting task details")
         }
-        self.imageToRecentre = self.task?.photo
+        self.imageToRecentre = self.taskImage?.photo
         
         self.imageView.image = self.imageToRecentre
         self.imageView.contentMode = .center
@@ -57,7 +57,7 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         
         self.imageScrollView.addSubview(self.imageView)
         
-        if self.task?.zoomLevel != nil {
+        if self.taskImage?.zoomLevel != nil {
             self.setOffsets()
         }
     }
@@ -85,8 +85,9 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     }
     
     func setOffsets() {
-        self.imageScrollView.setZoomScale((self.task?.zoomLevel)!, animated: true)
-        self.imageView.frame = (self.task?.imageFrameOffset)!
+        self.imageScrollView.setZoomScale((self.taskImage?.zoomLevel)!, animated: true)
+        self.imageView.frame = (self.taskImage?.imageFrameOffset)!
+        self.imageScrollView.contentOffset = CGPoint(x: (self.taskImage?.offset_X)!, y: (self.taskImage?.offset_Y)!)
     }
     
     func saveAndCropImage() {
@@ -99,7 +100,10 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         self.imageScrollView.layer.render(in: context)
         self.screenshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.task?.updateThumbnail(thumbnail: screenshot, frameOffset: self.imageView.frame, zoomLevel: self.imageScrollView!.zoomScale)
+        self.taskImage?.updateThumbnail(thumbnail: screenshot, frameOffset: self.imageView.frame, zoomLevel: self.imageScrollView!.zoomScale)
+        self.taskImage?.offset_X = offset.x
+        self.taskImage?.offset_Y = offset.y
+        
         dismiss(animated: true, completion: nil)
     }
     
