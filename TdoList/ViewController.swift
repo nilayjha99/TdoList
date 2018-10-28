@@ -66,13 +66,21 @@ class ViewController: UIViewController {
         self.priorityField.text = self.priorities[((self.task?.priority)!)]
         self.setPriorityIndicatorColor()
         
-        if self.task?.photo != nil {
+        if self.task?.photo != nil && self.taskImage == nil {
             self.taskPhoto.image = self.task?.thumbnail
             self.taskImage = TaskImageInfo(photo: (self.task?.photo)!, thumbnail: (self.task?.thumbnail)!)
             self.taskImage?.imageFrameOffset = self.task?.imageFrameOffset
             self.taskImage?.zoomLevel = self.task?.zoomLevel
             self.taskImage?.offset_X = self.task?.offset_X
             self.taskImage?.offset_Y = self.task?.offset_Y
+        } else if self.taskImage?.thumbnail != nil {
+            self.taskPhoto.image = self.taskImage?.thumbnail
+            self.task?.thumbnail = self.taskPhoto.image
+            self.task?.imageFrameOffset = self.taskImage?.imageFrameOffset
+            self.task?.zoomLevel = self.taskImage?.zoomLevel
+            self.task?.offset_X = self.taskImage?.offset_X
+            self.task?.offset_Y = self.taskImage?.offset_Y
+            self.recentreButton.isEnabled = true
         } else {
             self.recentreButton.isEnabled = false
         }
