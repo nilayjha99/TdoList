@@ -17,6 +17,7 @@
 		BF8244F62183F034004105FB /* MyLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8244F52183F034004105FB /* MyLogger.swift */; };
 		BF855D5621841DCD00117AE0 /* TodoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF855D5521841DCD00117AE0 /* TodoListTableViewCell.swift */; };
 		BF855D5821841E2C00117AE0 /* TodoListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF855D5721841E2C00117AE0 /* TodoListTableViewController.swift */; };
+		BF8D37C421855633000EE884 /* TaskImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8D37C321855633000EE884 /* TaskImageInfo.swift */; };
 		BF952A2D218136E100414D55 /* RecentreController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF952A2C218136E100414D55 /* RecentreController.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		BF8244F52183F034004105FB /* MyLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLogger.swift; sourceTree = "<group>"; };
 		BF855D5521841DCD00117AE0 /* TodoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTableViewCell.swift; sourceTree = "<group>"; };
 		BF855D5721841E2C00117AE0 /* TodoListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTableViewController.swift; sourceTree = "<group>"; };
+		BF8D37C321855633000EE884 /* TaskImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskImageInfo.swift; sourceTree = "<group>"; };
 		BF952A2C218136E100414D55 /* RecentreController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentreController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +80,7 @@
 				BF952A2C218136E100414D55 /* RecentreController.swift */,
 				BF474D8921815D0A00E59B9C /* TaskModel.swift */,
 				BF8244F32183E6DB004105FB /* ListModel.swift */,
+				BF8D37C321855633000EE884 /* TaskImageInfo.swift */,
 			);
 			path = TdoList;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF8D37C421855633000EE884 /* TaskImageInfo.swift in Sources */,
 				BF69D3C2217B0E0400C84AC1 /* ViewController.swift in Sources */,
 				BF69D3C0217B0E0400C84AC1 /* AppDelegate.swift in Sources */,
 				BF855D5621841DCD00117AE0 /* TodoListTableViewCell.swift in Sources */,

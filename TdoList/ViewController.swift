@@ -8,25 +8,6 @@
 
 import UIKit
 
-class TaskImageInfo {
-    var photo: UIImage
-    var thumbnail: UIImage
-    var imageFrameOffset: CGRect?
-    var zoomLevel: CGFloat?
-    var offset_X: CGFloat?
-    var offset_Y: CGFloat?
-    
-    init(photo: UIImage, thumbnail: UIImage) {
-        self.photo = photo
-        self.thumbnail = thumbnail
-    }
-    
-    func updateThumbnail(thumbnail: UIImage, frameOffset: CGRect, zoomLevel: CGFloat) {
-        self.thumbnail = thumbnail
-        self.imageFrameOffset = frameOffset
-        self.zoomLevel = zoomLevel
-    }
-}
 
 class ViewController: UIViewController {
 
@@ -39,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var notesField: UITextView!
     @IBOutlet weak var recentreButton: UIButton!
   
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     // MARK: - Private Properties -
     private var datePicker : UIDatePicker?
@@ -52,9 +34,12 @@ class ViewController: UIViewController {
 
     // MARK: - Lifecycle Hooks -
     override func viewDidLoad() {
-        super.viewDidLoad()
+        self.titleField.delegate = self
+        self.saveButton.isEnabled = false
         self.initPriorityPicker()
         self.initDatePicker()
+        super.viewDidLoad()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,6 +58,7 @@ class ViewController: UIViewController {
             self.notesField.text = ""
             self.priorityField.text = self.priorities[0]
             self.setPriorityIndicatorColor()
+            self.updateSaveButtonState()
             return
         }
         
@@ -92,6 +78,7 @@ class ViewController: UIViewController {
         } else {
             self.notesField.text = ""
         }
+        self.updateSaveButtonState()
     }
     
     func setTaskThumbnail() {
@@ -99,6 +86,14 @@ class ViewController: UIViewController {
         self.taskImage = TaskImageInfo(photo: (self.task?.photo)!, thumbnail: (self.task?.thumbnail)!)
     }
     
+    // MARK: - Private Methods -
+    /// Update the state of "save" button based on meal name textfield's value.
+    private func updateSaveButtonState() {
+        // Disable the Save button if the text field is empty.
+        let text = self.titleField.text ?? nil
+        self.saveButton.isEnabled = !text!.isEmpty
+    }
+
     // MARK: - Seague Handlers -
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
@@ -304,6 +299,20 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     }
 }
 
+extension ViewController: UITextFieldDelegate {
+    //MARK: - UITextFieldDelegate -
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Hide the keyboard.
+        textField.resignFirstResponder()
+        return true;
+    }
+    
+    //MARK: - UITextFieldDelegate -
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.updateSaveButtonState()
+    }
+
+}
 // MARK: - Helper Functions -
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {

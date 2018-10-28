@@ -91,8 +91,8 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
     }
     
     func saveAndCropImage() {
-        UIGraphicsBeginImageContextWithOptions(self.imageScrollView.bounds.size, true, UIScreen.main.scale)
         let offset = self.imageScrollView.contentOffset
+        UIGraphicsBeginImageContextWithOptions(self.imageScrollView.bounds.size, true, UIScreen.main.scale)
         guard let context = UIGraphicsGetCurrentContext() else {
             fatalError("ss")
         }
@@ -100,9 +100,11 @@ class RecentreController: UIViewController, UIScrollViewDelegate {
         self.imageScrollView.layer.render(in: context)
         self.screenshot = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.taskImage?.updateThumbnail(thumbnail: screenshot, frameOffset: self.imageView.frame, zoomLevel: self.imageScrollView!.zoomScale)
-        self.taskImage?.offset_X = offset.x
-        self.taskImage?.offset_Y = offset.y
+        self.taskImage?.updateThumbnail(thumbnail: screenshot,
+                                        frameOffset: self.imageView.frame,
+                                        zoomLevel: self.imageScrollView!.zoomScale,
+                                        offset_X: offset.x, offset_Y: offset.y)
+   
         
         dismiss(animated: true, completion: nil)
     }

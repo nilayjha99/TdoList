@@ -7,6 +7,7 @@
 //
 import UIKit
 
+
 class TaskModel: NSObject, NSCoding {
 
    
@@ -15,11 +16,14 @@ class TaskModel: NSObject, NSCoding {
     var dateCreated: String
     var dueDate: String
     var priority: Int
+    var imageDetails: TaskImageInfo?
     var photo: UIImage?
-    var thumbnail: UIImage?
-    var imageFrameOffset: CGRect?
-    var zoomLevel: CGFloat?
+//    var thumbnail: UIImage?
+//    var imageFrameOffset: CGRect?
+//    var zoomLevel: CGFloat?
     var notes: String?
+//    var offset_X: CGFloat?
+//    var offset_Y: CGFloat?
     
     private let dateFormatter = DateFormatter()
     var tmpDate: Date?
@@ -34,10 +38,11 @@ class TaskModel: NSObject, NSCoding {
         static let title = "title"
         static let dateCreated = "dateCreated"
         static let dueDate = "dueDate"
-        static let photo = "photo"
-        static let thumbnail = "thumbnail"
-        static let imageFrameOffset = "imageFrameOffset"
-        static let zoomLevel = "zoomLevel"
+        static let imageDetails = "imageDetails"
+//        static let photo = "photo"
+//        static let thumbnail = "thumbnail"
+//        static let imageFrameOffset = "imageFrameOffset"
+//        static let zoomLevel = "zoomLevel"
         static let notes = "notes"
         static let priority = "priority"
     }
@@ -47,11 +52,12 @@ class TaskModel: NSObject, NSCoding {
         aCoder.encode(self.title, forKey: PropertyKey.title)
         aCoder.encode(self.dateCreated, forKey: PropertyKey.dateCreated)
         aCoder.encode(self.dueDate, forKey: PropertyKey.dueDate)
-        aCoder.encode(self.photo, forKey: PropertyKey.photo)
+        aCoder.encode(self.imageDetails, forKey: PropertyKey.imageDetails)
+//        aCoder.encode(self.photo, forKey: PropertyKey.photo)
         aCoder.encode(self.priority, forKey: PropertyKey.priority)
-        aCoder.encode(self.thumbnail, forKey: PropertyKey.thumbnail)
-        aCoder.encode(self.imageFrameOffset, forKey: PropertyKey.imageFrameOffset)
-        aCoder.encode(self.zoomLevel, forKey: PropertyKey.zoomLevel)
+//        aCoder.encode(self.thumbnail, forKey: PropertyKey.thumbnail)
+//        aCoder.encode(self.imageFrameOffset, forKey: PropertyKey.imageFrameOffset)
+//        aCoder.encode(self.zoomLevel, forKey: PropertyKey.zoomLevel)
         aCoder.encode(self.notes, forKey: PropertyKey.notes)
     }
     
@@ -77,20 +83,23 @@ class TaskModel: NSObject, NSCoding {
             return nil
         }
 
-        guard let Photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage else {
-            MyLogger.logDebug("Unable to decode the photo for a task object.")
+        guard let ImageDetails = aDecoder.decodeObject(forKey: PropertyKey.imageDetails) as? TaskImageInfo else {
+            MyLogger.logDebug("Unable to decode the priority for a task object.")
             return nil
         }
-        
-        let Thumbnail = aDecoder.decodeObject(forKey: PropertyKey.thumbnail) as? UIImage
-        let ImageFrameOffset = aDecoder.decodeObject(forKey: PropertyKey.imageFrameOffset) as? CGRect
-        let ZoomLevel = aDecoder.decodeObject(forKey: PropertyKey.zoomLevel) as? CGFloat
+//        guard let Photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage else {
+//            MyLogger.logDebug("Unable to decode the photo for a task object.")
+//            return nil
+//        }
+//
+//        let Thumbnail = aDecoder.decodeObject(forKey: PropertyKey.thumbnail) as? UIImage
+//        let ImageFrameOffset = aDecoder.decodeObject(forKey: PropertyKey.imageFrameOffset) as? CGRect
+//        let ZoomLevel = aDecoder.decodeObject(forKey: PropertyKey.zoomLevel) as? CGFloat
         let Notes = aDecoder.decodeObject(forKey: PropertyKey.notes) as? String
         
         self.init(title: Title, dateCreated: DateCreated,
                   dueDate: DueDate, priority: Priority,
-                  photo: Photo, thumbnail: Thumbnail,
-                  imageFrameOffset: ImageFrameOffset, zoomLevel: ZoomLevel,
+                  imageDetails: ImageDetails,
                   notes: Notes)
     }
     
@@ -107,8 +116,7 @@ class TaskModel: NSObject, NSCoding {
      
      */
     init?(title: String, dateCreated: String, dueDate: String,
-         priority: Int,photo: UIImage?, thumbnail: UIImage? = nil,
-         imageFrameOffset: CGRect?  = nil, zoomLevel: CGFloat? = nil,notes: String? = nil) {
+          priority: Int,imageDetails: TaskImageInfo? = nil,notes: String? = nil) {
     
         // Theese fields must not be empty
         guard !(title.isEmpty || dateCreated.isEmpty || dueDate.isEmpty) else {
@@ -119,14 +127,7 @@ class TaskModel: NSObject, NSCoding {
         self.dateCreated = dateCreated
         self.priority = priority
         self.dueDate = dueDate
-        self.photo = photo
-        if thumbnail == nil {
-            self.thumbnail = photo
-        } else {
-            self.thumbnail = thumbnail
-        }
-        self.imageFrameOffset = imageFrameOffset
-        self.zoomLevel = zoomLevel
+        self.imageDetails = imageDetails
         self.notes = notes
         // set date formatting
         self.dateFormatter.dateStyle = .medium
@@ -142,18 +143,5 @@ class TaskModel: NSObject, NSCoding {
     func getDateString(_ dateTime: Date) -> String {
         return self.dateFormatter.string(from: dateTime)
     }
-    
-    func updateThumbnail(thumbnail: UIImage, frameOffset: CGRect, zoomLevel: CGFloat) {
-        self.thumbnail = thumbnail
-        self.imageFrameOffset = frameOffset
-        self.zoomLevel = zoomLevel
-    }
-    
-    func updateImageDetails(photo: UIImage, thumbnail: UIImage, frameOffset: CGRect, zoomLevel: CGFloat) {
-        self.photo = photo
-        self.updateThumbnail(thumbnail: thumbnail, frameOffset: frameOffset, zoomLevel: zoomLevel)
-    }
-    
-
 }
 

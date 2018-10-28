@@ -197,6 +197,7 @@
                         <outlet property="priorityField" destination="aE1-Hy-e1c" id="H6C-9v-Xaa"/>
                         <outlet property="priorityIndicator" destination="4xu-P4-PuH" id="VkG-qL-kkW"/>
                         <outlet property="recentreButton" destination="JTv-TZ-aR4" id="0J5-ds-Kud"/>
+                        <outlet property="saveButton" destination="iP5-wt-QbS" id="xUl-ZT-hjz"/>
                         <outlet property="taskPhoto" destination="0rH-B0-nk6" id="qNN-yI-SlK"/>
                         <outlet property="titleField" destination="AOI-t7-ywa" id="toq-qI-qWk"/>
                     </connections>
