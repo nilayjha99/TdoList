@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListTableViwController: UITableViewController {
    
-    let todoList = ListModel()
+    var todoList = [TaskModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class TodoListTableViwController: UITableViewController {
         
         // Load any saved meals, otherwise load sample data.
         if let savedMeals = loadTasks() {
-            self.todoList.taskList += savedMeals
+            self.todoList += savedMeals
         } else {
             // Load the sample data.
             self.loadSampleTasks()
@@ -35,36 +35,40 @@ class TodoListTableViwController: UITableViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
-        self.todoList.taskList += [TaskModel(title: "abcd", dateCreated: dateFormatter.string(from: Date()),
+        self.todoList += [TaskModel(title: "abcd", dateCreated: dateFormatter.string(from: Date()),
                                                 dueDate: dateFormatter.string(from: Date()), priority: 1)!]
     }
     /// Save/Archieve the meal details added/updated by the user.
     private func saveTasks() {
         // depricated as of new IOS 12 API
-        // let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(self.meals, toFile: Meal.ArchiveURL.path)
-        do {
-            let data = try NSKeyedArchiver.archivedData(withRootObject: self.todoList.taskList, requiringSecureCoding: false)
-            try data.write(to: TaskModel.ArchiveURL)
-            MyLogger.logDebug("Meals data successfully saved.")
-        }   catch {
-            MyLogger.logDebug("Error is saving meals data")
-            fatalError("Unable to save data")
+         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(self.todoList, toFile: TaskModel.ArchiveURL.path)
+        if !isSuccessfulSave {
+            print("bla bla bla")
         }
+//        do {
+//            let data = try NSKeyedArchiver.archivedData(withRootObject: self.todoList, requiringSecureCoding: false)
+//            try data.write(to: TaskModel.ArchiveURL)
+//            MyLogger.logDebug("Meals data successfully saved.")
+//        }   catch {
+//            MyLogger.logDebug("Error is saving meals data")
+//            fatalError("Unable to save data")
+//        }
     }
     
     /// Load/Unarchieve the meal details.
     private func loadTasks() -> [TaskModel]? {
         // Depricated as of new IOS 12 API
-        // return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.ArchiveURL.path)
-        do {
-            let tasksDataToRead = try NSData(contentsOf: TaskModel.ArchiveURL, options: .dataReadingMapped)
-            let tasksData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(Data(referencing: tasksDataToRead))
-            MyLogger.logDebug("Meals data successfully read.")
-            return tasksData as? [TaskModel]
-        } catch {
-            MyLogger.logDebug("Error in reading meals data")
-            return nil
-        }
+         let abcd = NSKeyedUnarchiver.unarchiveObject(withFile: TaskModel.ArchiveURL.path) as? [TaskModel]
+        return abcd
+//        do {
+//            let tasksDataToRead = try NSData(contentsOf: TaskModel.ArchiveURL, options: .dataReadingMapped)
+//            let tasksData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(Data(referencing: tasksDataToRead))
+//            MyLogger.logDebug("Meals data successfully read.")
+//            return tasksData as? [TaskModel]
+//        } catch {
+//            MyLogger.logDebug("Error in reading meals data")
+//            return nil
+//        }
     }
 
     // MARK: - Actions -
@@ -74,14 +78,14 @@ class TodoListTableViwController: UITableViewController {
             
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
                 // Update an existing meal.
-                self.todoList.taskList[selectedIndexPath.row] = task
+                self.todoList[selectedIndexPath.row] = task
                 tableView.reloadRows(at: [selectedIndexPath], with: .none)
             } else {
                 // Add a new meal.i
                 // this code computes the location of newer cell where new meal is to be inserted
-                let newIndexPath = IndexPath(row: self.todoList.taskList.count, section: 0)
+                let newIndexPath = IndexPath(row: self.todoList.count, section: 0)
                 
-                self.todoList.taskList.append(task)
+                self.todoList.append(task)
                 // .automatic allows the system to decide which animation
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
@@ -99,7 +103,7 @@ class TodoListTableViwController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Table view cells are reused and should be dequeued using a cell identifier.
         // #warning Incomplete implementation, return the number of rows
-        return self.todoList.taskList.count
+        return self.todoList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -109,12 +113,12 @@ class TodoListTableViwController: UITableViewController {
             fatalError("The dequeued cell is not an instance of MealTableViewCell.")
         }
         // set the meal content on the cell
-        let task = self.todoList.taskList[indexPath.row]
+        let task = self.todoList[indexPath.row]
         cell.taskTitle.text = task.title
         cell.taskDueDate.text = task.dueDate
         cell.priorityIndicator.backgroundColor = self.setPriorityIndicatorColor(priority: task.priority)
-        if task.imageDetails != nil {
-            cell.taskThumbnail.image = task.imageDetails?.thumbnail
+        if task.thumbnail != nil {
+            cell.taskThumbnail.image = task.thumbnail
         }
         return cell
     }
@@ -132,7 +136,7 @@ class TodoListTableViwController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // delete from the meals array
-            self.todoList.taskList.remove(at: indexPath.row)
+            self.todoList.remove(at: indexPath.row)
             // Save the meals.
             saveTasks()
             // Delete the row from the data source
@@ -166,7 +170,7 @@ class TodoListTableViwController: UITableViewController {
             }
             
             // choose the meal from tab-index selected by user
-            let selectedTask = self.todoList.taskList[indexPath.row]
+            let selectedTask = self.todoList[indexPath.row]
             // set the selected meal into the meal Detail view
             TaskDetailViewController.task = selectedTask
         default:

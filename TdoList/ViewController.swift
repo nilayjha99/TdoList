@@ -66,9 +66,13 @@ class ViewController: UIViewController {
         self.priorityField.text = self.priorities[((self.task?.priority)!)]
         self.setPriorityIndicatorColor()
         
-        if self.task?.imageDetails?.photo != nil {
-            self.taskPhoto.image = self.task?.imageDetails?.thumbnail
-            self.taskImage = self.task?.imageDetails
+        if self.task?.photo != nil {
+            self.taskPhoto.image = self.task?.thumbnail
+            self.taskImage = TaskImageInfo(photo: (self.task?.photo)!, thumbnail: (self.task?.thumbnail)!)
+            self.taskImage?.imageFrameOffset = self.task?.imageFrameOffset
+            self.taskImage?.zoomLevel = self.task?.zoomLevel
+            self.taskImage?.offset_X = self.task?.offset_X
+            self.taskImage?.offset_Y = self.task?.offset_Y
         } else {
             self.recentreButton.isEnabled = false
         }
@@ -114,7 +118,13 @@ class ViewController: UIViewController {
                               dateCreated: dateFormatter.string(from: Date()),
                               dueDate: self.dueDateField.text!,
                               priority: self.priorities.firstIndex(of: self.priorityField.text!)!,
-                              imageDetails: self.taskImage ?? nil, notes: self.notesField.text ?? nil)
+                              photo: self.taskImage?.photo,
+                              thumbnail: self.taskImage?.thumbnail,
+                              imageFrameOffset: self.taskImage?.imageFrameOffset,
+                              zoomLevel: self.taskImage?.zoomLevel,
+                              offset_X: self.taskImage?.offset_X,
+                              offset_Y: self.taskImage?.offset_Y,
+                              notes: self.notesField.text ?? nil)
         
     }
 
