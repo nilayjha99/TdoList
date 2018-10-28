@@ -14,6 +14,7 @@ class TodoListTableViewCell: UITableViewCell {
     @IBOutlet weak var priorityIndicator: UIButton!
     @IBOutlet weak var taskThumbnail: UIImageView!
     
+    @IBOutlet weak var timeLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

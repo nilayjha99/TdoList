@@ -37,10 +37,17 @@ class ViewController: UIViewController {
         self.saveButton.isEnabled = false
         self.initPriorityPicker()
         self.initDatePicker()
+        if self.task == nil {
+            let button1 = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonClicked))
+            self.navigationItem.leftBarButtonItem  = button1
+        }
         super.viewDidLoad()
         
     }
     
+    @objc func cancelButtonClicked() {
+        dismiss(animated: true, completion: nil)
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.populateTaskValues()
@@ -97,7 +104,7 @@ class ViewController: UIViewController {
     /// Update the state of "save" button based on meal name textfield's value.
     private func updateSaveButtonState() {
         // Disable the Save button if the text field is empty.
-        let text = self.titleField.text ?? nil
+        let text = self.titleField.text ?? nil 
         self.saveButton.isEnabled = !text!.isEmpty
     }
 

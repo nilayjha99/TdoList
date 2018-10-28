@@ -115,7 +115,22 @@ class TodoListTableViwController: UITableViewController {
         // set the meal content on the cell
         let task = self.todoList[indexPath.row]
         cell.taskTitle.text = task.title
-        cell.taskDueDate.text = task.dueDate
+        let dateFmt = DateFormatter()
+        dateFmt.dateStyle = .medium
+        dateFmt.timeStyle = .medium
+        let dateTime = dateFmt.date(from: task.dueDate)
+        let calendar = Calendar.current
+        let date = String(calendar.component(.day, from: dateTime!)) +
+            "-" + String(calendar.component(.month, from: dateTime!)) +
+            "-" + String(calendar.component(.year, from: dateTime!))
+        
+        cell.taskDueDate.text = date
+    
+        let hour = calendar.component(.hour, from: dateTime!)
+        let am_pm = (hour > 11) ? " PM" : " AM"
+        let time = String(hour % 12) + ":" + String(calendar.component(.minute, from: dateTime!)) + am_pm
+        cell.timeLabel.text = time
+        
         cell.priorityIndicator.backgroundColor = self.setPriorityIndicatorColor(priority: task.priority)
         if task.thumbnail != nil {
             cell.taskThumbnail.image = task.thumbnail
