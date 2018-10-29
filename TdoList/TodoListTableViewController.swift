@@ -12,6 +12,15 @@ class TodoListTableViwController: UITableViewController {
    
     var todoList = [TaskModel]()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if todoList.count > 1 {
+            let sortModel = ListModel()
+            let a = sortModel.getSortedTasks(self.todoList)
+            self.todoList = a
+            tableView.reloadData()
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,7 +32,10 @@ class TodoListTableViwController: UITableViewController {
         
         // Load any saved meals, otherwise load sample data.
         if let savedMeals = loadTasks() {
-            self.todoList += savedMeals
+            let sortModel = ListModel()
+            let a = sortModel.getSortedTasks(savedMeals)
+            tableView.reloadData()
+            self.todoList += a
         } else {
             // Load the sample data.
             self.loadSampleTasks()
