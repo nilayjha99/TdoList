@@ -34,7 +34,7 @@ class TodoListTableViwController: UITableViewController {
     private func loadSampleTasks() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
+        dateFormatter.timeStyle = .short
         self.todoList += [TaskModel(title: "abcd", dateCreated: dateFormatter.string(from: Date()),
                                                 dueDate: dateFormatter.string(from: Date()), priority: 1)!]
     }
@@ -115,22 +115,27 @@ class TodoListTableViwController: UITableViewController {
         // set the meal content on the cell
         let task = self.todoList[indexPath.row]
         cell.taskTitle.text = task.title
-        let dateFmt = DateFormatter()
-        dateFmt.dateStyle = .medium
-        dateFmt.timeStyle = .medium
-        let dateTime = dateFmt.date(from: task.dueDate)
-        let calendar = Calendar.current
-        let date = String(calendar.component(.day, from: dateTime!)) +
-            "-" + String(calendar.component(.month, from: dateTime!)) +
-            "-" + String(calendar.component(.year, from: dateTime!))
-        
-        cell.taskDueDate.text = date
-    
-        let hour = calendar.component(.hour, from: dateTime!)
-        let am_pm = (hour > 11) ? " PM" : " AM"
-        let time = String(hour % 12) + ":" + String(calendar.component(.minute, from: dateTime!)) + am_pm
-        cell.timeLabel.text = time
-        
+        print(task.dueDate)
+        if task.dueDate != "Unspecified" && task.dueDate != "Immediate" {
+            let dateFmt = DateFormatter()
+            dateFmt.dateStyle = .medium
+            dateFmt.timeStyle = .short
+            let dateTime = dateFmt.date(from: task.dueDate)
+            let calendar = Calendar.current
+            let date = String(calendar.component(.day, from: dateTime!)) +
+                "-" + String(calendar.component(.month, from: dateTime!)) +
+                "-" + String(calendar.component(.year, from: dateTime!))
+            
+            cell.taskDueDate.text = date
+            
+            let hour = calendar.component(.hour, from: dateTime!)
+            let am_pm = (hour > 11) ? " PM" : " AM"
+            let time = String(hour % 12) + ":" + String(calendar.component(.minute, from: dateTime!)) + am_pm
+            cell.timeLabel.text = time
+        } else {
+            cell.taskDueDate.text = task.dueDate
+            cell.timeLabel.text = task.dueDate
+        }
         cell.priorityIndicator.backgroundColor = self.setPriorityIndicatorColor(priority: task.priority)
         if task.thumbnail != nil {
             cell.taskThumbnail.image = task.thumbnail

@@ -79,7 +79,7 @@ class TaskModel: NSObject, NSCoding {
             return nil
         }
         
-        guard let Priority = aDecoder.decodeObject(forKey: PropertyKey.priority) as? Int else {
+        guard let Priority = aDecoder.decodeInteger(forKey: PropertyKey.priority) as? Int else {
             MyLogger.logDebug("Unable to decode the priority for a task object.")
             return nil
         }
