@@ -61,7 +61,7 @@ public class ListModel {
         self.sortImmediateTasks()
         self.sortUnspecifiedTasks()
         self.sortNormalTasks()
-        var sortedTasks = self.immediateTasks + self.taskList + self.unspecifiedTasks
+        let sortedTasks = self.immediateTasks + self.taskList + self.unspecifiedTasks
         return sortedTasks
     }
 }

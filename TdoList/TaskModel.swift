@@ -79,10 +79,7 @@ class TaskModel: NSObject, NSCoding {
             return nil
         }
         
-        guard let Priority = aDecoder.decodeInteger(forKey: PropertyKey.priority) as? Int else {
-            MyLogger.logDebug("Unable to decode the priority for a task object.")
-            return nil
-        }
+        let Priority = aDecoder.decodeInteger(forKey: PropertyKey.priority)
 
         let Photo = aDecoder.decodeObject(forKey: PropertyKey.photo) as? UIImage
         let Thumbnail = aDecoder.decodeObject(forKey: PropertyKey.thumbnail) as? UIImage
@@ -151,13 +148,6 @@ class TaskModel: NSObject, NSCoding {
         self.dateFormatter.timeZone = TimeZone.current
         self.tmpDate = self.dateFormatter.date(from: self.dueDate)
     }
-   
-    func getDateFromString(_ dateString: String) -> Date {
-        return self.dateFormatter.date(from: dateString)!
-    }
-    
-    func getDateString(_ dateTime: Date) -> String {
-        return self.dateFormatter.string(from: dateTime)
-    }
+
 }
 

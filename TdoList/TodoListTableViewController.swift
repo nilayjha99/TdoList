@@ -52,35 +52,27 @@ class TodoListTableViwController: UITableViewController {
     }
     /// Save/Archieve the meal details added/updated by the user.
     private func saveTasks() {
-        // depricated as of new IOS 12 API
-         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(self.todoList, toFile: TaskModel.ArchiveURL.path)
-        if !isSuccessfulSave {
-            print("bla bla bla")
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: self.todoList, requiringSecureCoding: false)
+            try data.write(to: TaskModel.ArchiveURL)
+            MyLogger.logDebug("Meals data successfully saved.")
+        }   catch {
+            MyLogger.logDebug("Error is saving meals data")
+            fatalError("Unable to save data")
         }
-//        do {
-//            let data = try NSKeyedArchiver.archivedData(withRootObject: self.todoList, requiringSecureCoding: false)
-//            try data.write(to: TaskModel.ArchiveURL)
-//            MyLogger.logDebug("Meals data successfully saved.")
-//        }   catch {
-//            MyLogger.logDebug("Error is saving meals data")
-//            fatalError("Unable to save data")
-//        }
     }
     
     /// Load/Unarchieve the meal details.
     private func loadTasks() -> [TaskModel]? {
-        // Depricated as of new IOS 12 API
-         let abcd = NSKeyedUnarchiver.unarchiveObject(withFile: TaskModel.ArchiveURL.path) as? [TaskModel]
-        return abcd
-//        do {
-//            let tasksDataToRead = try NSData(contentsOf: TaskModel.ArchiveURL, options: .dataReadingMapped)
-//            let tasksData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(Data(referencing: tasksDataToRead))
-//            MyLogger.logDebug("Meals data successfully read.")
-//            return tasksData as? [TaskModel]
-//        } catch {
-//            MyLogger.logDebug("Error in reading meals data")
-//            return nil
-//        }
+        do {
+            let tasksDataToRead = try NSData(contentsOf: TaskModel.ArchiveURL, options: .dataReadingMapped)
+            let tasksData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(Data(referencing: tasksDataToRead))
+            MyLogger.logDebug("Meals data successfully read.")
+            return tasksData as? [TaskModel]
+        } catch {
+            MyLogger.logDebug("Error in reading meals data")
+            return nil
+        }
     }
 
     // MARK: - Actions -
@@ -127,7 +119,7 @@ class TodoListTableViwController: UITableViewController {
         // set the meal content on the cell
         let task = self.todoList[indexPath.row]
         cell.taskTitle.text = task.title
-        print(task.dueDate)
+       
         if task.dueDate != "Unspecified" && task.dueDate != "Immediate" {
             let dateFmt = DateFormatter()
             dateFmt.dateStyle = .medium

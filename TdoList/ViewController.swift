@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var notesField: UITextView!
     @IBOutlet weak var recentreButton: UIButton!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var dateCreatedLabel: UILabel!
     
     // MARK: - Private Properties -
     private var datePicker : UIDatePicker?
@@ -30,7 +31,8 @@ class ViewController: UIViewController {
     let priorities = ["low", "medium", "high"]
     var task: TaskModel?
     var taskImage: TaskImageInfo?
-
+    var taskCreationDate: String?
+    
     // MARK: - Lifecycle Hooks -
     override func viewDidLoad() {
         self.titleField.delegate = self
@@ -65,6 +67,11 @@ class ViewController: UIViewController {
             self.priorityField.text = self.priorities[0]
             self.setPriorityIndicatorColor()
             self.updateSaveButtonState()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .medium
+            self.taskCreationDate = dateFormatter.string(from: Date())
+            self.dateCreatedLabel.text = self.dateCreatedLabel.text! + " " + taskCreationDate!
             return
         }
         
@@ -72,6 +79,8 @@ class ViewController: UIViewController {
         self.dueDateField.text = self.task?.dueDate
         self.priorityField.text = self.priorities[((self.task?.priority)!)]
         self.setPriorityIndicatorColor()
+        self.dateCreatedLabel.text = self.dateCreatedLabel.text! + " " + (self.task?.dateCreated)!
+        
         
         if self.task?.photo != nil && self.taskImage == nil {
             self.taskPhoto.image = self.task?.thumbnail
@@ -126,11 +135,18 @@ class ViewController: UIViewController {
             return
         }
 
+        var createdDate: String
+        if self.task != nil {
+            createdDate = (self.task?.dateCreated)!
+        } else {
+            createdDate = self.taskCreationDate!
+        }
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .medium
         self.task = TaskModel(title: self.titleField.text!,
-                              dateCreated: dateFormatter.string(from: Date()),
+                              dateCreated: createdDate,
                               dueDate: self.dueDateField.text!,
                               priority: self.priorities.firstIndex(of: self.priorityField.text!)!,
                               photo: self.taskImage?.photo,
@@ -257,7 +273,6 @@ extension ViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             color = UIColor.red
         default:
             color = UIColor.black
-            print("nothing")
         }
         self.priorityIndicator.backgroundColor = color
     }
@@ -281,7 +296,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
                 imagePickerController.sourceType = .camera
                 self.present(imagePickerController, animated: true, completion: nil)
             } else {
-                print("no camera")
+                MyLogger.logDebug("no camera found")
             }
         })
         
